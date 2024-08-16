@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 string input = "Paracetamol 500mg Tablet";
 string pattern = @"(?<name>[A-Za-z\s]+)\s(?<dosage>\d+mg)\s(?<form>[A-Za-z]+)";
@@ -18,19 +19,27 @@ else
 }
 
 Console.WriteLine("The other match");
-string inputToMatch = "Paracetamol 500mg Tab";
-Regex regex1 = new Regex(pattern);
-Match match1 = regex.Match(inputToMatch);
 
-if (match.Success)
+//string input11 = "Paracetamol 1.5g Tab";
+string input1 = "Paracetamol 1.5g Tabet";
+string pattern1 = @"(?<name>[A-Za-z\s]+)\s(?<dosage>\d+(\.\d+)?\s?(mg|g))\s(?<form>[A-Za-z]+)";
+
+Regex regex1 = new Regex(pattern1);
+Match match1 = regex1.Match(input1);
+
+if (match1.Success)
 {
-    Console.WriteLine("Medicine Name: " + match1.Groups["name"].Value);
-    Console.WriteLine("Dosage: " + match1.Groups["dosage"].Value);
-    Console.WriteLine("Form: " + match1.Groups["form"].Value);
+    string name = match1.Groups["name"].Value;
+    string dosage = match1.Groups["dosage"].Value;
+    string form = match1.Groups["form"].Value;
+
+    Console.WriteLine($"Name: {name}");
+    Console.WriteLine($"Dosage: {dosage}");
+    Console.WriteLine($"Form: {form}");
 }
 else
 {
-    Console.WriteLine("No match1 found.");
+    Console.WriteLine("No match found.");
 }
 
 Console.ReadLine();
